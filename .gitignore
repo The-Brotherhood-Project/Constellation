@@ -1,0 +1,19 @@
+# Local testing
+test/*
+
+# Local node_modules
+node_modules/
+*/node_modules/
+
+# Pycache
+__pycache__/
+
+# .env files
+*.env
+*/*.env
+*/credentials/
+
+# Temporary docs for planning at root, not committed to git
+# Keep all docs (except README.md) at docs/
+/*.md
+!README.md

@@ -1,0 +1,18 @@
+{
+  "name": "brotherhood-ucan",
+  "version": "1.0.0",
+  "description": "TypeScript microservice for UCAN related operations using Ed25519 did:jwk",
+  "main": "server.ts",
+  "scripts": {
+    "start": "tsx server.ts",
+    "test": "tsx test.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

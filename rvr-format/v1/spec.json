@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "cid": "cid-string-hash-of-graph-content",
+    "version_label": "Optional Roverlay Name",
+    "graph_data": {
+      "cid": "cid-of-knw-graph-this-rvr-attaches-to",
+      "version_label": "Optional Graph Label"
+    },
+    "license": {
+      "name": "CC-BY-SA-4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "copyright": "copyright-notice",
+    "created": "ISO-8601-timestamp"
+  },
+  "resources": {
+    "bibliographies": [
+        {
+          "local_id": 1,
+          "title": "Source Title",
+          "bib_type": "PDF",
+          "author": "Author Name",
+          "year": 2024,
+          "url": "https://example.com",
+          "references": [2, 3]
+        }
+    ],
+    "attachments": [
+        {
+          "node_id": 1,
+          "bib_id": 1,
+          "fragment_start": "Chapter 1",
+          "fragment_end": "Page 10"
+        }
+    ]
+  }
+}

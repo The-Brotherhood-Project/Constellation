@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casey — Knowledge Collector</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/icon.png">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/casey-styles.css">
+</head>
+<body>
+    <div class="main-container">
+
+        <!-- ── Header ─────────────────────────────────────────── -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-title">Casey</div>
+                <div class="header-subtitle">Knowledge Collector &amp; Capability Explorer</div>
+            </div>
+
+            <div class="header-right">
+                <button id="btn-open-settings" class="btn btn-secondary btn-small" type="button" title="Settings">
+                    <span class="btn-icon">⚙️</span>
+                    <span class="btn-text">⚙️ Settings</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="main-view">
+            <!-- ── Navigation Tabs ────────────────────────────────── -->
+            <nav class="nav-tabs">
+                <select id="casey-tab-select" class="nav-tabs-select" aria-label="Select View">
+                    <option value="learning">Learning</option>
+                    <option value="capabilities">Capabilities</option>
+                    <option value="export">Export Assessment</option>
+                </select>
+                <button id="tab-btn-learning" class="tab-btn active" type="button">Learning</button>
+                <button id="tab-btn-capabilities" class="tab-btn" type="button">Capabilities</button>
+                <button id="tab-btn-export" class="tab-btn" type="button">Export Assessment</button>
+            </nav>
+
+            <!-- ── Context / Action Bar ───────────────────────────── -->
+            <div class="context-bar">
+                <div style="cursor: pointer;">
+                    <span>Working on:</span>
+                    <span id="current-graph-label" class="context-label">No Graph Loaded</span>
+                    <span id="current-rvr-count-badge" class="context-badge">0 Overlays</span>
+                </div>
+                <div class="workspace-buttons">
+                    <button id="btn-import-graph" class="btn btn-primary btn-small" type="button" title="Import File">
+                        <span class="btn-icon">📥</span>
+                        <span class="btn-text">📥 Import</span>
+                    </button>
+                    <button id="btn-clear-workspace" class="btn btn-secondary btn-small destructive-hover" type="button" title="Clear Workspace">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">🗑️ Clear</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════ -->
+            <!-- TAB 1: Learning                                       -->
+            <!-- ════════════════════════════════════════════════════ -->
+            <main id="view-learning" class="view-section active">
+                <div class="canvas-wrapper">
+                    <div id="learning-empty-state" class="empty-hero">
+                        <div class="empty-hero-icon">🗺️</div>
+                        <div class="empty-hero-title">No Skill Graph Loaded</div>
+                        <div class="empty-hero-sub">
+                            Import a <code>.knw</code> knowledge graph to explore skills,
+                            browse prerequisite pathways, and overlay learning resources.
+                        </div>
+                        <button id="btn-hero-import-knw" class="btn btn-primary" type="button" data-import-type="knw">
+                            <span class="btn-icon">📥</span>
+                            <span class="btn-text">📥 Import Skill Graph (.knw)</span>
+                        </button>
+                    </div>
+
+                    <div id="learning-graph-container" class="graph-canvas"></div>
+
+                    <div class="metric-legend">
+                        <div class="legend-item"><span class="legend-swatch swatch-unknown"></span><span>🎯 Want to learn</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-progress"></span><span>⏳ In progress</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-mastered"></span><span>✅ Mastered</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-unassessed"></span><span>Unassessed</span></div>
+                    </div>
+
+                    <div id="learning-toolbar" class="canvas-toolbar">
+                        <button id="btn-learning-fit" class="btn btn-secondary btn-small" type="button" title="Fit to view">
+                            <span class="btn-icon">🎯</span>
+                            <span class="btn-text">🎯 Fit</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- ════════════════════════════════════════════════════ -->
+            <!-- TAB 2: Capabilities                                   -->
+            <!-- ════════════════════════════════════════════════════ -->
+            <main id="view-capabilities" class="view-section">
+                <div class="canvas-wrapper">
+
+                    <div class="capability-selector-bar">
+                        <label for="capability-select" class="label-muted">Record:</label>
+                        <select id="capability-select" class="capability-dropdown" aria-label="Select Capability Record">
+                            <option value="self-assessment">🎯 Self-Assessment (Local)</option>
+                        </select>
+                        <button id="btn-capability-summary" class="btn btn-secondary btn-small" type="button" title="View Record Summary">
+                            <span class="btn-icon">📋</span>
+                            <span class="btn-text">📋 Summary</span>
+                        </button>
+                    </div>
+
+                    <div id="capabilities-empty-state" class="empty-hero">
+                        <div class="empty-hero-icon">🏆</div>
+                        <div class="empty-hero-title">Graph Required</div>
+                        <div class="empty-hero-sub">Load a Skill Graph in the Learning tab to visualize and record capability progress.</div>
+                        <button id="btn-hero-cap-import" class="btn btn-primary" type="button" data-import-type="knw">
+                            <span class="btn-icon">📥</span>
+                            <span class="btn-text">📥 Import Skill Graph (.knw)</span>
+                        </button>
+                    </div>
+
+                    <div id="capabilities-graph-container" class="graph-canvas"></div>
+
+                    <div class="metric-legend">
+                        <div class="legend-item"><span class="legend-swatch swatch-unknown"></span><span>Want to learn / Not met</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-progress"></span><span>In progress / Partial</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-mastered"></span><span>Mastered / Passed</span></div>
+                        <div class="legend-item"><span class="legend-swatch swatch-unassessed"></span><span>Unassessed</span></div>
+                    </div>
+
+                    <div class="canvas-toolbar">
+                        <button id="btn-capabilities-fit" class="btn btn-secondary btn-small" type="button" title="Fit to view">
+                            <span class="btn-icon">🎯</span>
+                            <span class="btn-text">🎯 Fit</span>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- ════════════════════════════════════════════════════ -->
+            <!-- TAB 3: Export Assessment                              -->
+            <!-- ════════════════════════════════════════════════════ -->
+            <main id="view-export" class="view-section">
+                <div class="export-card-wrapper">
+                    <div class="card">
+                        <div class="section-header">
+                            <h2>Export Self-Assessment</h2>
+                            <div class="button-group">
+                                <button id="btn-save-snapshot" class="btn btn-secondary btn-small" type="button" title="Save Snapshot to Local Storage">
+                                    <span class="btn-icon">💾</span>
+                                    <span class="btn-text">💾 Save Snapshot</span>
+                                </button>
+                                <button id="btn-export-cpb" class="btn btn-primary btn-small" type="button" title="Export as .cpb Binary">
+                                    <span class="btn-icon">📤</span>
+                                    <span class="btn-text">📤 Export .cpb File</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="export-version-label">Version Label <span class="text-muted">(optional)</span></label>
+                            <input type="text" id="export-version-label" placeholder="e.g. My Progress – Nov 2026">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Assessment Record Metadata</label>
+                            <table class="metadata-preview-table">
+                                <tbody>
+                                    <tr><td>Algorithm Name</td><td id="meta-alg-name">self-assessment</td></tr>
+                                    <tr><td>Algorithm Version</td><td id="meta-alg-version">1.0.0</td></tr>
+                                    <tr><td>Algorithm DID</td><td id="meta-alg-did">did:alg:61d4c5c8-c22f-4e16-b2b7-0becf09b8e21</td></tr>
+                                    <tr><td>Attached Graph CID</td><td id="meta-graph-cid">None</td></tr>
+                                    <tr><td>User DID</td><td id="meta-user-did">(not set)</td></tr>
+                                    <tr><td>Assessed Nodes</td><td id="meta-assessed-count">0 nodes</td></tr>
+                                    <tr><td>Issuer / Signature</td><td><em>Self-reported (null)</em></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div><!-- /.main-container -->
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- MODALS                                                     -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <span class="close btn-cancel-settings">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Appearance</label>
+                    <button id="settings-theme-toggle-btn" type="button" class="settings-toggle-btn" aria-pressed="false">
+                        <span class="settings-toggle-btn-track" aria-hidden="true">
+                            <span class="settings-toggle-btn-thumb"></span>
+                        </span>
+                        <span id="settings-theme-toggle-label" class="settings-toggle-btn-label">Light mode</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="settings-user-did">Your User DID</label>
+                    <input type="text" id="settings-user-did" placeholder="e.g. did:key:z6Mk...">
+                    <small class="text-muted">Used as <code>user_did</code> in exported capability files. Leave blank to export with null.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-cancel-settings">Cancel</button>
+                <button id="btn-save-settings" type="button" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Node Details & Learning Resources Modal -->
+    <div id="modal-node-resources" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-node-title">Node Details</h2>
+                <span class="close" id="btn-close-resources-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Description</label>
+                    <div id="modal-node-desc" class="text-muted"></div>
+                </div>
+                <div class="form-group">
+                    <label>Domain</label>
+                    <div id="modal-node-domain" class="text-muted"></div>
+                </div>
+                <div class="form-group">
+                    <label>Prerequisites</label>
+                    <div id="modal-node-prereqs" class="text-muted"></div>
+                </div>
+                <div class="form-group">
+                    <label>Self-Assessment Status</label>
+                    <div id="modal-node-status" class="text-muted"></div>
+                </div>
+                <hr>
+                <div class="section-header">
+                    <h3>Attached Learning Resources</h3>
+                    <span id="modal-resource-count" class="badge">0</span>
+                </div>
+                <div id="modal-resource-list" class="resource-list">
+                    <div class="empty-state">No resources attached to this node.</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-footer-close-resources" class="btn btn-secondary" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Self-Assessment Modal -->
+    <div id="modal-self-assessment" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-assess-node-title">Assess Capability</h2>
+                <span class="close" id="btn-close-assess-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Your Progress</label>
+                    <div class="assessment-choice-group">
+                        <button id="btn-choice-want" class="assessment-choice-btn" type="button">
+                            <span class="choice-icon">🎯</span>
+                            <span class="choice-title">Want to Learn</span>
+                        </button>
+                        <button id="btn-choice-progress" class="assessment-choice-btn" type="button">
+                            <span class="choice-icon">⏳</span>
+                            <span class="choice-title">In Progress</span>
+                        </button>
+                        <button id="btn-choice-mastered" class="assessment-choice-btn" type="button">
+                            <span class="choice-icon">✅</span>
+                            <span class="choice-title">Mastered</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="assess-notes-input">Learning Notes</label>
+                    <textarea id="assess-notes-input" rows="3" placeholder="Notes, reflections, resources used..."></textarea>
+                </div>
+                <div class="form-group">
+                    <small id="assess-last-updated" class="text-muted"></small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-assess-remove" class="btn btn-danger-light" type="button">Clear Assessment</button>
+                <button id="btn-assess-save" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Capability Summary Modal -->
+    <div id="modal-capability-summary" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="summary-modal-title">Capability Record Summary</h2>
+                <span class="close" id="btn-close-summary-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <table class="metadata-preview-table">
+                    <tbody>
+                        <tr><td>Issuer DID</td><td id="summary-issuer-did">–</td></tr>
+                        <tr><td>User DID</td><td id="summary-user-did">–</td></tr>
+                        <tr><td>Algorithm</td><td id="summary-algorithm">–</td></tr>
+                        <tr><td>Target Graph CID</td><td id="summary-graph-cid">–</td></tr>
+                        <tr><td>Graph Alignment</td><td id="summary-graph-match">–</td></tr>
+                        <tr><td>Entries</td><td id="summary-entries-count">0</td></tr>
+                        <tr><td>Created / Valid Until</td><td id="summary-timestamps">–</td></tr>
+                        <tr><td>Signature</td><td id="summary-signature">–</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-close-summary-footer" class="btn btn-secondary" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-copy">© 2026 The Brotherhood Project Developers. Released under <a href="https://www.gnu.org/licenses/agpl-3.0" target="_blank">GNU AGPL v3.0</a>. Source code: <a href="https://github.com/The-Brotherhood-Project/Constellation">The-Brotherhood-Project/Constellation</a></div>
+    </footer>
+
+    <!-- ═════════════════════════════════════════════════════════ -->
+    <!-- SCRIPTS  (all window-globals first, then module entry)    -->
+    <!-- ═════════════════════════════════════════════════════════ -->
+
+    <!-- Utils (no DOM, no state deps) -->
+    <script src="scripts/utils/expression-utils.js"></script>
+    <script src="scripts/utils/graph-utils.js"></script>
+    <script src="scripts/utils/bibliography-utils.js"></script>
+
+    <!-- Globals -->
+    <script src="scripts/globals/local-storage.js"></script>
+    <script src="scripts/globals/casey-state-manager.js"></script>
+
+    <!-- Components (dialog and importer must come before ops/ui) -->
+    <script src="scripts/components/dialog.js"></script>
+    <script src="scripts/components/importer.js"></script>
+    <script src="scripts/components/modal-controller.js"></script>
+    <script src="scripts/components/graph-visualizer.js"></script>
+    <script src="scripts/components/graph-controller.js"></script>
+
+    <!-- Settings (after dialog) -->
+    <script src="scripts/globals/settings.js"></script>
+
+    <!-- Operations -->
+    <script src="scripts/ops/graph-ops.js"></script>
+    <script src="scripts/ops/resource-ops.js"></script>
+    <script src="scripts/ops/capability-ops.js"></script>
+    <script src="scripts/ops/assessment-ops.js"></script>
+
+    <!-- UI Controllers -->
+    <script src="scripts/ui/nav-ui.js"></script>
+    <script src="scripts/ui/learning-ui.js"></script>
+    <script src="scripts/ui/capability-ui.js"></script>
+    <script src="scripts/ui/export-ui.js"></script>
+
+    <!-- App entry point (ES module — only for the codec ES import) -->
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>

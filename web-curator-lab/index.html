@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Web Curator Lab</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/icon.png" />
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/lab-styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">Web Curator Lab</div>
+                <div class="header-subtitle">Standalone Offline Lab</div>
+            </div>
+
+            <div class="header-right">
+                <button id="btn-open-settings" class="btn btn-secondary" style="font-size: 1em;" type="button">
+                    <span class="btn-icon">⚙️</span>
+                    <span class="btn-text">⚙️ Settings</span>
+                </button>
+            </div>
+        </div>
+        <div class="main-view">
+            <div class="nav-tabs">
+                <select id="lab-tab-select" class="nav-tabs-select">
+                    <option value="workspace">Node Draft</option>
+                    <option value="graph">Graph Visualizer</option>
+                    <option value="attribution">Source Attribution</option>
+                    <option value="save">Save Version</option>
+                </select>
+                <button id="tab-workspace" class="tab-btn active">Node Draft</button>
+                <button id="tab-graph" class="tab-btn">Graph Visualizer</button>
+                <button id="tab-attribution" class="tab-btn">Source Attribution</button>
+                <button id="tab-save" class="tab-btn">Save Version</button>
+            </div>
+
+        <div class="context-bar">
+            <div id="active-version-info" style="cursor: pointer;" >
+                Working on: <span id="current-version-label">None</span>
+            </div>
+            <div class="workspace-buttons">
+                <button id="btn-import-workspace" class="btn btn-secondary btn-small" ><span class="btn-icon">📥</span><span class="btn-text"> Import</span></button>
+                <button id="btn-clear-workspace" class="btn btn-secondary btn-small destructive-hover" ><span class="btn-icon">🗑️</span><span class="btn-text"> Clear Workspace</span></button>
+            </div>
+        </div>
+
+        <!-- View: Workspace List -->
+        <div id="view-workspace" class="view-section active">
+            <div class="workspace-layout">
+                <div class="workspace-column">
+                    <div class="card scroll-container" style="max-height: max(80vh, 580px);">
+                        <div class="section-header">
+                            <h2>Nodes</h2>
+                            <div class="node-draft-buttons">
+                                <button id="btn-llm-suggest" class="btn btn-secondary btn-small" ><span class="btn-icon">✨</span><span class="btn-text"> AI Suggest</span></button>
+                                <button id="btn-group-domain" class="btn btn-primary btn-small" ><span class="btn-icon">📁</span><span class="btn-text"> Add Domain</span></button>
+                                <button id="btn-open-add-node-modal" class="btn btn-primary btn-small" ><span class="btn-icon">➕</span><span class="btn-text"> Add Node</span></button>
+                                <span id="draft-count" class="badge-count"><span id="draft-count-num">0</span><span id="draft-count-ender"> Nodes</span></span>
+                            </div>
+                        </div>
+                        
+                        <div id="draft-nodes-list">
+                            <p class="empty-state">Loading workspace...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Sidebar (Add Node) - Only in Workspace View -->
+                <div class="sidebar-column">    
+                    <div class="card sticky-sidebar">
+                        <div class="add-node-header">
+                            <h3>Add New Node</h3>
+                            <div class="inline-form-group">
+                                <label>Under Domain ID</label>
+                                <input type="number" id="node-parent-domain" placeholder="ID (optional)" style="width: 100px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Local ID</label>
+                            <input type="number" id="node-id" placeholder="Integer ID">
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="node-title" placeholder="Node Title">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="node-desc" rows="2" placeholder="Optional description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Prerequisite Expression</label>
+                            <input type="text" id="node-pre" placeholder="e.g. (1 AND 2) OR 3">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" id="btn-add-node" >Add to Draft</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Graph Visualizer -->
+        <div id="view-graph" class="view-section">
+            <div class="card scroll-container">
+                <div class="section-header">
+                    <h2>Graph Visualization</h2>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="btn-reset-layout"  class="btn btn-secondary btn-small"><span class="btn-icon">🏠</span><span class="btn-text"> Reset Layout</span></button>
+                        <button id="btn-randomize"     class="btn btn-secondary btn-small"><span class="btn-icon">🎲</span><span class="btn-text"> Randomise</span></button>
+                        <button id="btn-fix-positions" class="btn btn-primary btn-small"><span class="btn-icon">📌</span><span class="btn-text"> Fix Positions</span></button>
+                        <button id="btn-refresh-graph" class="btn btn-secondary btn-small"><span class="btn-icon">🔄</span><span class="btn-text"> Refresh Graph</span></button>
+                    </div>
+                </div>
+                
+                <div id="graph-visualizer" style="display: block; position: relative;">
+                    <p id="prerequisite-adding-helper-text" class="graph-helper-text">
+                        Click on a node to add the node as the prerequisite for the selected node.
+                    </p>
+                    <p id="prerequisite-removing-helper-text" class="graph-helper-text" style="display: none;">
+                        Click on a node to remove the node as the prerequisite for the selected node.
+                    </p>
+                    <div id="graph-container" class="graph-container"></div>
+                    <p class="graph-helper-text">
+                        Arrows point from <strong>prerequisite</strong> to <strong>dependent</strong> node.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Source Attribution -->
+        <div id="view-attribution" class="view-section">
+            <div class="card scroll-container" style="width: 100%;">
+                <div class="section-header">
+                    <h2>Source Attribution (<span id="attribution-tray-count">0</span>/6)</h2>
+                    <div class="attribution-actions">
+                        <button id="btn-deselect-source" class="btn btn-secondary btn-small"  style="display: none;"><span class="btn-icon">✖</span><span class="btn-text"> Deselect</span></button>
+                        <button id="btn-open-source-discovery" class="btn btn-primary btn-small" ><span class="btn-icon">➕</span><span class="btn-text"> Bibliographies</span></button>
+                    </div>
+                </div>
+
+                <!-- Top tab strip: one tab per tray entry. Clicking a tab toggles selection (the same source can be deselected
+                    by clicking it again). The labels truncate as the window narrows, and collapse to the icon at small widths. -->
+                <div id="attribution-tray-tabs" class="attribution-tabs" role="tablist" aria-label="Active bibliography sources"></div>
+
+                <!-- Vestigial list container. Kept for fallback rendering and the empty-state copy; hidden by the tab-based CSS. -->
+                <div id="attribution-tray-list" class="attribution-tray-list" hidden></div>
+
+                <div id="attribution-graph-container" class="graph-container"></div>
+
+                <div id="attribution-hint" class="attribution-hint">
+                    Select a source from the tray, then click a node on the graph to attribute it.
+                </div>
+            </div>
+        </div>
+
+        <!-- View: Save Version -->
+        <div id="view-save" class="view-section">
+            <div class="card scroll-container">
+                <div class="section-header">
+                    <h2>Save/Export</h2>
+                </div>
+                <div class="form-group">
+                    <label>Version Label</label>
+                    <input type="text" id="version-label" placeholder="e.g. Baseline v1.0">
+                </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Export Format</label>
+                    <select id="export-format-select" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                        <option value="knw">Knowledge Graph (KNW v2)</option>
+                        <option value="rvr">Resource Overlay (RVR v1)</option>
+                    </select>
+                </div>
+
+                <div class="button-group" style="margin-top: 20px;">
+                    <button id="btn-export-workspace" class="btn btn-secondary" ><span class="btn-icon">📤</span><span class="btn-text"> Export KNW File</span></button>
+                    <button id="btn-save-snapshot" class="btn btn-primary" ><span class="btn-icon">💾</span><span class="btn-text"> Save KNW Data</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="import-file-input" accept=".knw,.rvr" style="display: none;">
+
+    <!-- Edit Node Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Node <span id="edit-node-id-display"></span></h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Local ID</label>
+                <input type="number" id="edit-node-id">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="edit-node-title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="edit-node-desc" rows="3"></textarea>
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                <div style="flex: 1;">
+                    <label>Prerequisite Expression</label>
+                    <input type="text" id="edit-node-pre">
+                </div>
+                <div style="display: flex; align-items: center; gap: 5px; margin-top: 25px;">
+                    <input type="checkbox" id="edit-node-propagate" style="width: auto; margin: 0;">
+                    <label for="edit-node-propagate" style="margin: 0; font-size: 0.85em; white-space: nowrap;">Propagate Changes</label>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" >Cancel</button>
+                <button class="btn btn-primary" >Update Node</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Node Modal -->
+    <div id="createNodeModal" class="modal">
+        <div class="modal-content">
+            <div class="inline-form-group">
+                <label>Under Domain ID</label>
+                <input type="number" id="modal-node-parent-domain" placeholder="ID (optional)" style="width: 100px;">
+            </div>
+            <div class="modal-header">
+                <h2>Add New Node</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Local ID</label>
+                <input type="number" id="modal-node-id" placeholder="Integer ID">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="modal-node-title" placeholder="Node Title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="modal-node-desc" rows="2" placeholder="Optional description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Prerequisite Expression</label>
+                <input type="text" id="modal-node-pre" placeholder="e.g. (1 AND 2) OR 3">
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" >Cancel</button>
+                <button class="btn btn-primary" >Add to Draft</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Domain Modal -->
+    <div id="createDomainModal" class="modal">
+        <div class="modal-content">
+            <div class="inline-form-group">
+                <label>Under Domain ID</label>
+                <input type="number" id="domain-parent-domain" placeholder="ID (optional)" style="width: 100px;">
+            </div>
+            <div class="modal-header">
+                <h2>Create Domain</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Local ID</label>
+                <input type="number" id="create-domain-id" placeholder="Integer ID">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="create-domain-title" placeholder="Domain Title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="create-domain-desc" rows="3" placeholder="Domain Description (optional)"></textarea>
+            </div>
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" >Cancel</button>
+                <button type="button" class="btn btn-primary" >Create Domain</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Domain Modal -->
+    <div id="editDomainModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Domain</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Local ID</label>
+                <input type="number" id="edit-domain-id">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="edit-domain-title">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="edit-domain-desc" rows="3"></textarea>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" >Cancel</button>
+                <button class="btn btn-primary" >Update Domain</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Source Modal -->
+    <div id="sourceModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 id="source-modal-title">Add Source</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="modal-flex-row">
+                <!-- Left Side: Bibliography Details -->
+                <div class="modal-flex-column-left">
+                    <h3 style="margin-top: 0; color: #5f6368; font-size: 0.9em;">Bibliography</h3>
+                    <div class="form-group">
+                        <label>Title *</label>
+                        <input type="text" id="source-title" placeholder="Source Title">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="source-type" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            <option value="pdf">PDF</option>
+                            <option value="video">Video</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input type="text" id="source-author" placeholder="Author Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Year</label>
+                        <input type="number" id="source-year" placeholder="Year">
+                    </div>
+                    <div class="form-group">
+                        <label>URL</label>
+                        <input type="text" id="source-url" placeholder="https://...">
+                    </div>
+                    <!-- Read-only fields -->
+                    <div class="form-group">
+                        <label>Bibliography Hash</label>
+                        <input type="text" id="source-bib-hash" readonly disabled>
+                    </div>
+                </div>
+                <!-- Right Side: Source Fragment -->
+                <div style="flex: 1; padding-left: 10px;">
+                    <h3 style="margin-top: 0; font-size: 0.9em;">Source Fragment</h3>
+                    <div class="form-group">
+                        <label>Fragment Start</label>
+                        <input type="text" id="source-start" placeholder="Page/Time">
+                    </div>
+                    <div class="form-group">
+                        <label>Fragment End</label>
+                        <input type="text" id="source-end" placeholder="Page/Time">
+                    </div>
+                    <!-- Read-only fields -->
+                    <div class="form-group">
+                        <label>Source UUID</label>
+                        <input type="text" id="source-uuid" readonly disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-source" class="btn btn-danger btn-small"  style="display: none;">Delete</button>
+                <div>
+                    <button class="btn btn-secondary" >Cancel</button>
+                    <button class="btn btn-primary" >Save Source</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Source Modal -->
+    <div id="viewSourceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Source Details</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div id="view-source-content">
+                <!-- Content injected via JS -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" >Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LLM Modal -->
+    <div id="llm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AI Node Suggestions</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>What topic do you want suggestions for?</label>
+                    <textarea id="llm-query" rows="3" placeholder="e.g. 'Key concepts in quantum mechanics' or 'Steps to bake a cake'" style="width: 100%;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>AI Model</label>
+                    <select id="llm-model-select">
+                        <option value="" disabled>Loading models...</option>
+                    </select>
+                </div>
+                <div id="llm-selection-reminder" class="form-group">
+                    <span>
+                        <strong>ℹ️ Selection Active:</strong> Only <span id="llm-selected-count">0</span> selected node(s) will be used as context.
+                    </span>
+                </div>
+                <div class="button-group">
+                    <button id="btn-get-llm-suggestions" class="btn btn-primary">Get Suggestions</button>
+                </div>
+                
+                <div id="llm-loading" style="display: none;">
+                    <p>Thinking...</p>
+                </div>
+                
+                <div id="llm-results" style="margin-top: 20px;">
+                    <!-- Results will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metadata Modal -->
+    <div id="metadata-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Metadata</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="metadata-content">
+                    <!-- Metadata will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="settings-api-key">OpenRouter API Key</label>
+                    <input type="password" id="settings-api-key" placeholder="Enter API Key">
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="settings-save-key">
+                    <label for="settings-save-key">Save API key to browser storage</label>
+                </div>
+                <div class="form-group">
+                    <label for="settings-favorite-model">Favorite Model</label>
+                    <input type="text" id="settings-favorite-model" placeholder="e.g. anthropic/claude-3.5-sonnet">
+                </div>
+                <div class="form-group">
+                    <label>Appearance</label>
+                    <button id="settings-theme-toggle-btn" type="button" class="settings-toggle-btn" aria-pressed="false">
+                        <span class="settings-toggle-btn-track" aria-hidden="true">
+                            <span class="settings-toggle-btn-thumb"></span>
+                        </span>
+                        <span id="settings-theme-toggle-label" class="settings-toggle-btn-label">Light mode</span>
+                    </button>
+                </div>
+                <div class="checkbox-group" style="margin-top: 10px;">
+                    <input type="checkbox" id="settings-delete-unused-bibliographies">
+                    <label for="settings-delete-unused-bibliographies">Delete unused bibliographies on export</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary">Cancel</button>
+                <button id="btn-save-settings" type="button" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Source Discovery Modal (Source Attribution Tab) -->
+    <div id="sourceDiscoveryModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>Bibliographies Manager</h2>
+                <span class="close" >&times;</span>
+            </div>
+            <div class="discovery-tabs">
+                <button id="discovery-tab-graph" class="discovery-tab active" data-panel="graph" >Search Graph Citations</button>
+                <button id="discovery-tab-create" class="discovery-tab" data-panel="create" >Create New Bibliography</button>
+            </div>
+
+            <div id="discovery-panel-graph" class="discovery-panel active">
+                <div class="form-group">
+                    <input type="text" id="graph-citation-search" placeholder="Search by title or author...">
+                </div>
+                <div class="form-group">
+                    <label>Sort by</label>
+                    <select id="graph-citation-sort">
+                        <option value="alphabetical">Alphabetical</option>
+                        <option value="most-used">Most used</option>
+                        <option value="recently-added">Recently added</option>
+                        <option value="nearby">Nearby nodes (BFS prerequisites)</option>
+                    </select>
+                </div>
+                <div id="graph-citation-results" class="discovery-results">
+                    <p class="empty-state">No citations in the current graph yet.</p>
+                </div>
+            </div>
+
+            <div id="discovery-panel-create" class="discovery-panel">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="new-bib-title" placeholder="Source Title">
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" id="new-bib-author" placeholder="Author Name">
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="number" id="new-bib-year" placeholder="Year">
+                </div>
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="new-bib-type">
+                        <option value="pdf">PDF</option>
+                        <option value="video">Video</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>URL</label>
+                    <input type="text" id="new-bib-url" placeholder="https://...">
+                </div>
+                <div class="button-group">
+                    <button id="btn-create-bib-submit" class="btn btn-primary" type="button">
+                        <span class="btn-icon">➕</span><span class="btn-text"> Create &amp; Add to Tray</span>
+                    </button>
+                    <button id="btn-create-bib-cancel" class="btn btn-secondary" type="button">
+                        <span class="btn-icon">✖</span><span class="btn-text"> Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Node Attributions Modal -->
+    <div id="viewAttributionsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Attributions for <span id="view-attributions-node-title"></span></h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="button-group" style="justify-content: flex-start; margin-bottom: 12px;">
+                    <button id="btn-attributions-select-all" class="btn btn-secondary btn-small" type="button">
+                        <span class="btn-icon">☑</span><span class="btn-text"> Select All</span>
+                    </button>
+                    <button id="btn-attributions-mass-delete" class="btn btn-danger btn-small" type="button">
+                        <span class="btn-icon">🗑</span><span class="btn-text"> Delete Selected</span>
+                    </button>
+                </div>
+                <div id="view-attributions-list" class="sources-container">
+                    <!-- Injected by modal-controller.js -->
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bibliography Detail Modal (Read-only) -->
+    <div id="bibliographyDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Source Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="bibliography-detail-content" class="modal-body">
+                <!-- Injected by modal-controller.js -->
+            </div>
+            <div class="button-group">
+                <button class="btn btn-danger btn-small" type="button">
+                    <span class="btn-icon">🗑</span><span class="btn-text"> Delete</span>
+                </button>
+                <button class="btn btn-secondary" type="button">
+                    <span class="btn-icon">✖</span><span class="btn-text"> Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attribute Source Dialog (Source Attribution Tab) -->
+    <div id="attributeSourceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Attribute Source to <span id="attribute-target-node-title"></span></h2>
+                <span class="close" id="btn-close-attribute-modal">&times;</span>
+            </div>
+            <div class="form-group">
+                <label>Source</label>
+                <div id="attribute-source-info" class="attribute-source-info"></div>
+            </div>
+            <div class="form-group">
+                <label>Fragment Start</label>
+                <input type="text" id="attribute-fragment-start" placeholder="e.g. pp 101, 12:40, Chapter 2, etc.">
+            </div>
+            <div class="form-group">
+                <label>Fragment End</label>
+                <input type="text" id="attribute-fragment-end" placeholder="e.g. pp 107, 15:26, Chapter 3, etc.">
+            </div>
+            <div class="button-group">
+                <button id="btn-save-attribute-source" class="btn btn-primary" type="button">
+                    <span class="btn-icon">💾</span><span class="btn-text"> Save</span>
+                </button>
+                <button id="btn-cancel-attribute-source" class="btn btn-secondary" type="button">
+                    <span class="btn-icon">✖</span><span class="btn-text"> Cancel</span>
+                </button>
+            </div>
+    </div>
+    </div>
+
+    <footer>
+        <div class="footer-copy">© 2026 The Brotherhood Project Developers. Released under <a href="https://www.gnu.org/licenses/agpl-3.0" target="_blank">GNU AGPL v3.0</a>. Source code: <a href="https://github.com/The-Brotherhood-Project/Constellation">The-Brotherhood-Project/Constellation</a></div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/utils/expression-utils.js"></script>
+    <script src="scripts/globals/local-storage.js"></script>
+    <script src="scripts/globals/settings.js"></script>
+    <script src="scripts/globals/lab-state-manager.js"></script>
+    <script src="scripts/ops/graph-ops.js"></script>
+    <script src="scripts/components/dialog.js"></script>
+    <script src="scripts/components/importer.js"></script>
+    <script src="scripts/components/modal-controller.js"></script>
+    <script src="scripts/ui/draft-ui.js"></script>
+    <script src="scripts/ui/export-ui.js"></script>
+    <script src="scripts/utils/prompts.js"></script>
+    <script src="scripts/utils/graph-utils.js"></script>
+    <script src="scripts/utils/bibliography-utils.js"></script>
+    <script src="scripts/ops/rvr-ops.js"></script>
+    <script src="scripts/components/graph-visualizer.js"></script>
+    <script src="scripts/components/ai-assist.js"></script>
+    <script src="scripts/components/graph-controller.js"></script>
+    <script src="scripts/ui/graph-ui.js"></script>
+    <script src="scripts/ui/attribution-ui.js"></script>
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>

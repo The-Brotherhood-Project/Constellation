@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+alembic
+pydantic
+psycopg[binary]
+PyGithub
+python-multipart
+python-dotenv
+zstandard
+jcs

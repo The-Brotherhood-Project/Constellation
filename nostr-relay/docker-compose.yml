@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: brotherhood-nostr-relay
+    ports:
+      - "27054:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    ports:
+      - "27000:10000"
+    environment:
+      PYTHON-UNBUFFERED: 1
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_started
+      ucan-service:
+        condition: service_healthy
+      
+    volumes:
+      - credentials:/nostr-relay/credentials
+
+  ucan-service:
+    build: ../brotherhood-ucan
+    init: true
+    ports:
+      - "27076:7600"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:7600/health || exit 1"]
+      interval: 5s
+      timeout: 1m30s
+      retries: 5
+      start_period: 3s
+    environment:
+      PORT: 7600                # The internal listening port
+
+volumes:
+  postgres_data:
+  credentials:

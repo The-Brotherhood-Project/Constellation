@@ -1,0 +1,369 @@
+/* Casey Application Stylesheet
+   Inherits resets, headers, modals, cards, buttons, and tokens from common.css.
+   NO hardcoded inline styles.
+*/
+
+/* Version & Context Indicator Bar */
+.context-badge {
+    background-color: var(--primary-pale);
+    color: var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin: 0 4px;
+}
+
+.context-badge.mismatch {
+    background-color: var(--warn-bg);
+    color: var(--warn-color);
+}
+
+/* View Sections */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+}
+
+/* Visualization Canvas Layout */
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 210px);
+    min-height: 520px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.graph-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Canvas Floating Toolbar */
+.canvas-toolbar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    background-color: var(--card-bg);
+    padding: 6px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+    border: 1px solid var(--border-soft);
+}
+
+.capability-selector-bar {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--card-bg);
+    padding: 6px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+    border: 1px solid var(--border-soft);
+}
+
+.capability-dropdown {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Legend Overlay */
+.metric-legend {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 10;
+    background-color: var(--card-bg);
+    padding: 8px 14px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px var(--shadow-soft);
+    border: 1px solid var(--border-soft);
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+.swatch-unknown {
+    background-color: #e0e0e0;
+    border-color: #9e9e9e;
+}
+
+.swatch-progress {
+    background-color: #ffe0b2;
+    border-color: #ff9800;
+}
+
+.swatch-mastered {
+    background-color: #c8e6c9;
+    border-color: #4caf50;
+}
+
+.swatch-unassessed {
+    background-color: #97C2FC;
+    border-color: #2B7CE9;
+}
+
+/* Assessment Buttons Inside Modal */
+.assessment-choice-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.assessment-choice-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 10px;
+    border: 2px solid var(--border-color);
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+}
+
+.assessment-choice-btn:hover {
+    background-color: var(--hover-bg);
+}
+
+.assessment-choice-btn.selected-want,
+.assessment-choice-btn.selected-progress,
+.assessment-choice-btn.selected-mastered {
+    border-color: var(--focus-ring);
+    background-color: var(--primary-pale);
+    font-weight: 700;
+}
+
+.choice-icon {
+    font-size: 1.5rem;
+}
+
+.choice-title {
+    font-size: 0.95rem;
+}
+
+/* Resources & Node Details Modal */
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 14px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.resource-card {
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 12px;
+    background-color: var(--hover-bg);
+}
+
+.resource-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.resource-card-title {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.resource-card-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.resource-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.resource-link:hover {
+    text-decoration: underline;
+}
+
+/* Export View */
+.export-card-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.export-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.metadata-preview-table {
+    width: 100%;
+    margin-top: 12px;
+    border-collapse: collapse;
+}
+
+.metadata-preview-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.9rem;
+}
+
+.metadata-preview-table td:first-child {
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 35%;
+}
+
+/* Empty State */
+.empty-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}
+
+.empty-hero-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.empty-hero-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.empty-hero-sub {
+    font-size: 0.95rem;
+    max-width: 440px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Settings Toggle Button (Matches web-curator-lab) */
+.settings-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 6px 16px 6px 10px;
+    color: var(--text-color);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    height: 40px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    position: relative;
+    user-select: none;
+}
+
+.settings-toggle-btn:hover:not(:disabled) {
+    background: var(--hover-bg);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.settings-toggle-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.settings-toggle-btn-track {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    background: var(--border-color);
+    border-radius: 999px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.settings-toggle-btn.is-dark .settings-toggle-btn-track {
+    background: var(--primary-color);
+}
+
+.settings-toggle-btn-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px var(--shadow-color);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.settings-toggle-btn.is-dark .settings-toggle-btn-thumb {
+    transform: translateX(14px);
+    background: var(--card-bg);
+}
+
+.settings-toggle-btn-label {
+    min-width: 80px;
+    text-align: left;
+}
+
+/* Mobile responsiveness adjustments */
+@media (max-width: 768px) {
+    .assessment-choice-group {
+        grid-template-columns: 1fr;
+    }
+    .capability-selector-bar {
+        position: static;
+        margin-bottom: 10px;
+        box-shadow: none;
+    }
+    .metric-legend {
+        flex-direction: column;
+        gap: 6px;
+    }
+}

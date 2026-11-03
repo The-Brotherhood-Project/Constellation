@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "local_id": 1,
+      "title": "Test Node 1",
+      "description": "This is a test node"
+    },
+    {
+      "local_id": 2,
+      "title": "Test Node 2",
+      "domain_id": 1
+    }
+  ],
+    "domains": [
+    {
+      "local_id": 1,
+      "title": "Test Domain 1",
+      "description": "This is a test domain"
+    }
+  ]
+}

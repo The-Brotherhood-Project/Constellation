@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "cid": "cid-string-hash-of-graph-content",
+    "version_label": "Optional Graph Name",
+    "license": {
+      "name": "CC-BY-SA-4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "copyright": "copyright-notice",
+    "created": "ISO-8601-timestamp"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "local_id": 1,
+        "title": "Node Title",
+        "description": "Node description",
+        "prerequisite": "(1 AND 2) OR 3",
+        "mentions": [5, 6],
+        "domain_id": 1,
+        "assessable": true
+      }
+    ],
+    "domains": [
+      {
+        "local_id": 1,
+        "title": "Domain Name",
+        "description": "Domain description",
+        "parent_id": null
+      }
+    ]
+  },
+  "positions": {
+    "1": {
+      "x": 100.5,
+      "y": 200.3
+    }
+  }
+}

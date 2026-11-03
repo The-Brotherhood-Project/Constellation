@@ -1,0 +1,59 @@
+{
+  "metadata": {
+    "uuid": "uuid-string-or-null",
+    "version_label": "Graph Name",
+    "base_uuid": "uuid-string-or-null",
+    "base_version_label": "Parent Graph Name or null",
+    "author": "primary-author-username",
+    "authors": [
+      { "user_uuid": "author-uuid", "username": "author-name" }
+    ],
+    "license": {
+      "name": "CC-BY-SA-4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
+    },
+    "created": "ISO-8601-timestamp",
+    "last_updated": "ISO-8601-timestamp"
+  },
+  "graph": {
+    "nodes": [
+      {
+        "local_id": 1,
+        "title": "Node Title",
+        "description": "Node description",
+        "prerequisite": "(1 AND 2) OR 3",
+        "mentions": {"5": true, "6": true},
+        "domain_id": 1,
+        "x": 100.5,
+        "y": 200.3,
+        "assessable": true,
+        "source_items": [
+          {
+            "title": "Source Title",
+            "bib_type": "PDF",
+            "author": "Author Name",
+            "year": 2024,
+            "url": "https://example.com",
+            "fragment_start": "Chapter 1",
+            "fragment_end": "Page 10",
+            "bib_hash": "abc123...",
+            "source_uuid": "uuid-string"
+          }
+        ]
+      }
+    ],
+    "domains": [
+      {
+        "local_id": 1,
+        "title": "Domain Name",
+        "description": "Domain description",
+        "parent_id": null
+      }
+    ],
+    "redirects": [
+      { "old_local_id": 5, "new_local_id": 10 }
+    ]
+  },
+  "graphHash": "lowercase-hex-sha256",
+  "fileHash":  "lowercase-hex-sha256"
+}

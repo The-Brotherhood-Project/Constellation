@@ -1,0 +1,36 @@
+{
+    "metadata": {
+        "user_did": "public-did-key-of-user",
+        "issuer_did": "public-did-key-of-issuer",
+        "graph_data": {
+            "cid": "cid-of-knw-graph-this-cpb-attaches-to",
+            "version_label": "Optional Graph Label"
+        },
+        "algorithm_data": {
+            "did": "public-did-of-versioned-algorithm",
+            "name": "Optional Algorithm Name",
+            "version": "Optional Algorithm Version"
+        },
+        "created": "ISO-8601-timestamp",
+        "use_before": "ISO-8601-timestamp",
+        "signature": "issuer-signature-of-entire-cpb-content-without-signature-field"
+    },
+    "capabilities": [
+        {
+            "node_id": 1,
+            "result": {
+                "primary": "1-field-summary-of-node-1-result",
+                "arbitrary-key-1": "arbitrary-value-1",
+                "arbitrary-key-2": "arbitrary-value-2"
+            }
+        },
+        {
+            "node_id": 2,
+            "result": {
+                "primary": "1-field-summary-of-node-2-result",
+                "arbitrary-key-1": "arbitrary-value-1"
+            }
+        }
+    ],
+    "evaluation_set": []
+}

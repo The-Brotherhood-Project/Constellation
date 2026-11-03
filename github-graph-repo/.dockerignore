@@ -1,0 +1,11 @@
+# Documentation
+.env.example
+*.md
+
+# Database
+*.db
+*.log
+*.sqlite
+
+# Git
+.gitignore

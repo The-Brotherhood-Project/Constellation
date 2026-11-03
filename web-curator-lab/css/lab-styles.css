@@ -1,0 +1,1596 @@
+/* Curator Lab Workspace Styles (Inherits resets, headers, side panels, cards, generic buttons/inputs, tables, and modals from common.css) */
+
+/* Domain Context Menu */
+#domain-context-menu {
+    position: absolute;
+    z-index: 10000 !important;
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-soft) !important;
+    box-shadow: 0 2px 10px var(--shadow-modal) !important;
+    border-radius: 4px;
+    padding: 5px 0;
+    min-width: 150px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.domain-context-option {
+    padding: 8px 15px;
+    cursor: pointer !important;
+    font-size: 14px;
+    color: var(--text-color);
+    transition: background-color 0.2s;
+    user-select: none; /* Prevent text selection */
+}
+
+.domain-context-option:hover {
+    background-color: var(--hover-bg) !important;
+}
+
+/* View Management */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+}
+
+/* Specific elements inside tables or layout */
+.node-id {
+    font-weight: bold;
+    color: var(--primary-color);
+    background: var(--primary-pale);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.version-badge {
+    background: var(--active-bg);
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 40px 0;
+    font-style: italic;
+}
+
+code {
+    background: var(--hover-bg);
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.badge-count {
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    margin-left: 8px;
+}
+
+.badge-assessable {
+    margin-left: 5px;
+    cursor: help;
+}
+
+/* Button override for Redirect page links */
+.btn-goto {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background-color: var(--hover-bg);
+    color: var(--primary-color);
+    border: none;
+    border-radius: 16px;
+    text-decoration: none;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-goto:hover {
+    background-color: var(--primary-pale);
+    color: var(--primary-hover);
+    box-shadow: 0 1px 2px var(--shadow-soft);
+}
+
+.btn-goto:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+/* Assessment updates alert boxes */
+.assessable-change-item {
+    background: var(--card-bg);
+    border: 1px solid var(--error-bg);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px var(--shadow-soft);
+}
+
+.assessable-change-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.assessable-change-title {
+    font-weight: 600;
+    color: var(--error-color);
+}
+
+.assessable-change-id {
+    font-family: monospace;
+    background: var(--error-bg);
+    color: var(--error-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.redirect-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.redirect-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.redirect-input {
+    flex: 1;
+}
+
+.redirect-status {
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.status-valid { color: var(--success-color); }
+.status-invalid { color: var(--error-color); }
+
+/* Graph Visualizer container */
+
+.visualizer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.source-tag {
+    background: var(--active-bg);
+    color: var(--text-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.source-tag .remove-source {
+    margin-left: 5px;
+    cursor: pointer;
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+.sources-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+/* Source Item Row in Forms - List Layout */
+.source-item-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px var(--shadow-soft);
+    width: 100%;
+    box-sizing: border-box;
+    min-height: auto;
+}
+
+.source-item-row:hover {
+    background: var(--bg-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 5px var(--shadow-soft);
+    transform: translateY(-1px);
+}
+
+.source-icon {
+    font-size: 1.2em;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-pale);
+    border-radius: 6px;
+    color: var(--primary-color);
+    margin-right: 15px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.source-main-info {
+    flex: 1;
+    margin-bottom: 0;
+    padding-right: 10px;
+}
+
+.source-title {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 1em;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.source-meta-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 15px;
+}
+
+.source-actions {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.source-arrow {
+    font-size: 1.5em;
+    color: var(--border-color);
+    line-height: 1;
+    transition: color 0.2s;
+    margin-left: auto;
+    padding-left: 10px;
+}
+
+.source-item-row:hover .source-arrow {
+    color: var(--primary-color);
+}
+
+/* Source Cells in Table */
+.sources-cell-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.source-pill {
+    background: var(--primary-pale);
+    color: var(--primary-color);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.source-pill:hover {
+    background: color-mix(in srgb, var(--primary-pale) 70%, var(--primary-color) 30%);
+}
+
+.source-pill.legacy {
+    background: var(--error-bg);
+    color: var(--error-color);
+}
+
+/* View Source Modal Details */
+.view-source-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-soft);
+    padding-bottom: 8px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row .label {
+    font-weight: 600;
+    width: 100px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+/* Domain Grouping Styles */
+.domain-folder {
+    background: var(--bg-color);
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary-color);
+    user-select: none;
+}
+
+.domain-folder:hover {
+    background: var(--primary-pale);
+}
+
+.domain-folder td {
+    border-top: 2px solid var(--primary-pale);
+    border-bottom: 2px solid var(--primary-pale);
+    padding: 10px 15px;
+}
+
+.folder-icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    text-align: center;
+}
+
+.clickable-title {
+    cursor: pointer;
+}
+
+.clickable-title:hover {
+    text-decoration: underline;
+}
+
+.domain-folder:hover td {
+    background-color: var(--bg-color);
+}
+
+.selection-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.domain-node-row.collapsed {
+    display: none;
+}
+
+#workspace-list table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+}
+
+#workspace-list th, #workspace-list td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+}
+
+/* Combined tree control column (Selection + ID/Icon) */
+.tree-column {
+    width: 140px;
+    min-width: 140px;
+    white-space: nowrap;
+    text-align: left;
+    padding-right: 5px !important;
+}
+
+.domain-actions, .node-actions {
+    float: right;
+    display: flex;
+    gap: 5px;
+}
+
+.tree-column input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.tree-column .folder-icon, .tree-column .node-id {
+    display: inline-block;
+    min-width: 25px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Node Creation Section Layout */
+.add-node-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: 10px;
+}
+
+.add-node-header h3 {
+    margin: 0;
+}
+
+.inline-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inline-form-group label {
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.inline-form-group input {
+    margin-bottom: 0;
+    padding: 5px 10px;
+}
+
+.domain-folder strong {
+    color: var(--primary-color);
+}
+
+.domain-description {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+tr.selected-row td {
+    background-color: var(--primary-pale) !important;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    @media (min-width: 768px) {
+        div:first-child {
+            margin-bottom: 6px;
+        }
+    }
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+.switch:has(checkbox.disabled) {
+    .slider.round {
+        background-color: var(--disabled-bg);
+        cursor: not-allowed;
+    }
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    container-type: size;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--border-color);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50cqh;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: var(--card-bg);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+input:checked + .slider:before {
+    -webkit-transform: translateX(max(0px, calc(100cqw - 100cqh)));
+    -ms-transform: translateX(max(0px, calc(100cqw - 100cqh)));
+    transform: translateX(max(0px, calc(100cqw - 100cqh)));
+}
+.slider.round {
+    border-radius: 50cqh;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Layout Restructuring */
+.workspace-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.workspace-column {
+    flex: 2;
+    min-width: 0;
+}
+
+.sidebar-column {
+    width: 300px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+#graphActionModal {
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+#graphActionModal .modal-content {
+    width: 60%;
+    max-width: 600px;
+}
+
+/* Adjustments for Sidebar Form card scroll limits */
+.sidebar-column .card {
+    margin-bottom: 20px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar-column .card::-webkit-scrollbar {
+    display: none;
+}
+
+.sticky-sidebar {
+    position: sticky;
+    top: 20px;
+}
+
+/* LLM Modal */
+#llm-selection-reminder {
+    padding: 10px;
+    background-color: var(--secondary-color);
+
+    border-radius: 4px;
+    border-left: 4px solid var(--primary-color);
+    font-size: 0.8em;
+    color: var(--primary-pale);
+}
+
+#llm-loading {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.llm-toolbar {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--hover-bg);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.llm-toolbar-label-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.llm-toolbar-label {
+    margin: 0;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.llm-suggestion-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: var(--bg-color);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.llm-suggestion-card.imported {
+    opacity: 0.5;
+}
+
+.llm-suggestion-content {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.llm-suggestion-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    padding-top: 4px;
+}
+
+.llm-suggestion-title {
+    margin-top: 0;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.llm-suggestion-description {
+    margin-bottom: 10px;
+    color: var(--text-muted);
+}
+
+#metadata-content {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 15px;
+}
+
+.metadata-item {
+    padding: 10px;
+    background: var(--card-bg);
+    border-radius: 4px;
+    
+    div {
+        font-size: 0.9em;
+    }
+
+    div:first-child {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+}
+
+.node-draft-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Tree Item Styling (Nested tree lists) */
+.tree-item {
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: var(--card-bg);
+    transition: all 0.2s ease;
+}
+
+.tree-item:hover {
+    box-shadow: 0 2px 8px var(--shadow-soft);
+    border-color: var(--border-color);
+}
+
+.tree-item.selected {
+    border-color: var(--primary-color);
+    background: var(--primary-pale);
+}
+
+.tree-item-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+}
+
+.tree-item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tree-item-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.tree-item-id {
+    background: var(--hover-bg);
+    color: var(--text-muted);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.tree-item-description {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-left: 8px;
+}
+
+.tree-item-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    flex: 1;
+    justify-content: flex-end;
+
+    button {
+        pointer-events: none;
+    }
+}
+
+/* Very complicated way to select only the most nested element, aka the topmost element of a hover */
+.tree-item:not(:has(.tree-item-children .tree-item:hover)):hover > .tree-item-header > .tree-item-actions { 
+    opacity: 1;
+    button {
+        pointer-events: auto;
+    }
+}
+
+.tree-item-details {
+    padding: 0 16px 12px 16px;
+    border-top: 1px solid var(--hover-bg);
+    margin-top: 8px;
+    padding-top: 8px;
+}
+
+.tree-item-details p {
+    margin: 4px 0;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+/* Node-specific styling in trees */
+.assessable-badge {
+    background: var(--warn-bg);
+    color: var(--warn-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+
+/* Status badges for dirty/deleted states */
+.status-badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-badge.dirty {
+    color: var(--warn-color);
+    font-size: 0.9em;
+}
+
+.status-badge.deleted {
+    font-size: 0.9em;
+}
+
+/* Node state styling */
+.tree-item.node-dirty, .tree-item.domain-dirty {
+    border-left: 4px solid var(--warn-color);
+    background: color-mix(in srgb, var(--warn-bg) 60%, var(--card-bg) 40%);
+}
+
+.tree-item.node-dirty .tree-item-title, .tree-item.domain-dirty .tree-item-title {
+    color: var(--warn-text);
+}
+
+.tree-item.node-deleted, .tree-item.domain-deleted {
+    border-left: 4px solid var(--error-color);
+    background: color-mix(in srgb, var(--error-bg) 60%, var(--card-bg) 40%);
+    opacity: 0.7;
+}
+
+.tree-item.node-deleted .tree-item-title, .tree-item.domain-deleted .tree-item-title {
+    color: var(--error-color);
+    text-decoration: line-through;
+}
+
+/* Source link button */
+.source-link-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    font-size: 0.85em;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.source-link-btn:hover {
+    background: var(--primary-pale) !important;
+}
+
+.deleted-title {
+    text-decoration: line-through;
+    color: var(--error-color);
+}
+
+/* Tree item children container */
+.tree-item-children {
+    margin-left: 20px;
+    margin-top: 4px;
+    position: relative;
+}
+
+/* Graph Action Modal */
+
+#graphActionModal {
+    .modal-body-section.metadata-section {
+        line-height: 1.8;
+        border-left: 1px solid var(--primary-color);
+        padding-left: 12px;
+    }
+
+    .button-group {
+        margin-top: 12px;
+        gap: 6px;
+    }
+
+       h3 {
+        margin-bottom: 4px;
+    }
+
+    h4 {
+        margin-bottom: 2px;
+    }
+
+    .save-button {
+        margin: 12px 0;
+        width: 100%;
+    }
+
+    .danger-section {
+        h3 {
+            color: var(--error-color);
+        }
+
+        p {
+            color: color-mix(in srgb, var(--error-color) 30%, var(--secondary-color));
+        }
+    }
+
+    .graph-modal-danger-zone-warning {
+        margin-top: 10px;
+        padding: 12px;
+        background: var(--warn-bg);
+        color: var(--warn-text);
+        border: 1px solid var(--error-color);
+        border-radius: 4px;
+    }
+}
+
+/* Pending Proposals Styles */
+.proposal-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg-color);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.proposal-item:hover {
+    background: var(--primary-pale);
+    border-color: var(--primary-color);
+}
+
+.proposal-item.vote-approve {
+    border-left: 4px solid var(--success-color);
+    background: color-mix(in srgb, var(--success-bg) 70%, var(--card-bg) 30%);
+}
+
+.proposal-item.vote-reject {
+    border-left: 4px solid var(--error-color);
+    background: color-mix(in srgb, var(--error-bg) 70%, var(--card-bg) 30%);
+}
+
+.proposal-type {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.proposal-initiator {
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+.proposal-delete-btn {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    color: var(--error-color);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.proposal-delete-btn:hover {
+    background: var(--error-bg);
+}
+
+.proposal-vote-buttons {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+}
+
+.proposal-vote-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s;
+}
+
+.proposal-vote-btn.approve {
+    color: var(--success-color);
+    background: var(--card-bg);
+}
+
+.proposal-vote-btn.approve:enabled:hover,
+.proposal-vote-btn.approve.active {
+    background: var(--success-bg);
+    border-color: var(--success-color);
+}
+
+.proposal-vote-btn.reject {
+    color: var(--error-color);
+    background: var(--card-bg);
+}
+
+.proposal-vote-btn.reject:enabled:hover,
+.proposal-vote-btn.reject.active {
+    background: var(--error-bg);
+    border-color: var(--error-color);
+}
+
+.database-list-metadata {
+    font-size: 0.7em;
+    color: var(--secondary-color);
+    margin-top: 6px;
+    line-height: 1.3;
+}
+
+#global-import-file {
+    cursor: pointer;
+}
+
+/* Target and style the actual "Choose File" button */
+#global-import-file::file-selector-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s ease-in-out;
+}
+
+/* Add a hover effect */
+#global-import-file::file-selector-button:hover {
+    background-color: var(--primary-color);
+}
+
+.graph-context-menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px 0 8px;
+    box-shadow: 0 2px 4px var(--shadow-soft);
+}
+
+.context-menu-item {
+    padding: 4px 8px;
+    border: .5px solid var(--border-soft);
+    cursor: pointer;
+    font-size: 0.75em;
+    transition: all 0.2s;
+}
+
+.context-menu-item:hover {
+    font-weight: bold;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.context-menu-item--destructive {
+    color: var(--error-color);
+}
+
+.context-menu-item--destructive:hover {
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+.graph-helper-text {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+#prerequisite-adding-helper-text,
+#prerequisite-removing-helper-text {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    color: var(--text-color);
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-color);
+    border-radius: 4px;
+    padding: 4px 8px;
+    z-index: 1500;
+    display: none;          /* Hard hide for now */
+}
+
+#prerequisite-removing-helper-text {
+    background-color: var(--error-bg);
+    border-color: var(--error-color);
+}
+
+@media (max-width: 768px) {
+    /* header right */
+    .header-right {
+        flex-direction: row;
+
+        div:nth-child(2) {
+            margin-left: 10px;
+        }
+    }
+
+    /* Turn off 'hover-for-visibility' on node buttons */
+    .tree-item-actions {
+        opacity: 1;
+        transition: none;
+        button {
+            padding: 6px 8px;
+        }
+    }
+
+    /* Active version and workspace buttons */
+    .active-version-display {
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        gap: 15px !important;
+    }
+    .workspace-buttons {
+        justify-content: flex-end !important;
+        display: flex !important;
+        flex-shrink: 4;
+        gap: 5px !important;
+        width: 60% !important;
+    }
+    .workspace-buttons button {
+        text-align: center !important;
+    }
+
+    #draft-count-ender {
+        display: none !important;
+    }
+
+    div:has(> #btnLlmSuggest) {
+        justify-content: flex-end !important;
+    }
+
+    .database-list-metadata {
+        display: none !important;
+    }
+
+    .assessable-column,
+    .based-on-column {
+        display: none !important;
+    }
+
+    @media (max-width: 500px) {
+        .tree-item-content {
+            gap: 2px;
+        }
+
+        .tree-item-actions {
+            gap: 3px;
+            button {
+                padding: 2px 3px;
+            }
+        }
+
+        .folder-icon {
+            margin-right: 2px;
+        }
+
+        .node-column {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 440px) {
+        .tree-item-actions > button {
+            font-size: 0.6em;
+        }
+
+        /* Re-enable scrolling after 440px */
+        #draft-nodes-list {
+            overflow: auto;
+        }
+
+        .node-draft-buttons {
+            gap: 3px;
+        }
+
+        .author-column {
+            display: none !important;
+        }
+    }
+
+    @media (max-width: 300px) {
+        /* get rid of header right */
+        .header-right {
+            display: none !important;
+        }
+
+        /* Hide action buttons again in too narrow screens */
+        .tree-item-actions {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            button {
+                pointer-events: none;
+            }
+        }
+
+        .action-column {
+            display: none !important;
+        }
+    }
+}
+
+/* ====================================================================
+   Source Attribution Tab
+   ==================================================================== */
+
+.attribution-tray-column {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 20px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.attribution-tray-column .card {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.attribution-tray-list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 60px;
+    margin-bottom: 8px;
+}
+
+.attribution-tray-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.attribution-tray-item:hover {
+    background: var(--hover-bg);
+    border-color: var(--primary-light);
+}
+
+.attribution-tray-item.is-selected {
+    background: var(--primary-pale);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.attribution-tray-item .tray-text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.attribution-tray-item .tray-title {
+    font-size: 0.95em;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attribution-tray-item .tray-author {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attribution-tray-item .tray-remove {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.attribution-tray-item .tray-remove:hover {
+    color: var(--error-color);
+    background: var(--error-bg);
+}
+
+.attribution-tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin: 4px 2px;
+    justify-content: space-evenly;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 0;
+}
+
+.attribution-tab {
+    background-color: var(--primary-pale);
+    padding: 4px 6px;
+    border-radius: 8px;
+    color: var(--text-color);
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: flex-end;
+    max-width: calc((100% - 40px) / sibling-count());
+}
+
+.attribution-tab > span.tab-label {
+    height: 1.7em;
+    width: calc(100% - 5px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attribution-tab:hover,
+.attribution-tab.is-selected {
+    cursor: pointer;
+    background-color: var(--primary-hover);
+    font-weight: bold;
+}
+
+.attribution-tab .tab-remove {
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: var(--text-muted);
+    border-radius: 8px;
+    transition: all .05s ease;
+}
+
+.attribution-tab .tab-remove:hover {
+    cursor: pointer;
+    color: var(--error-color);
+    transform: scale(1.5);
+}
+
+.attribution-actions > button {
+    margin: 0 2px;
+}
+
+.attribution-graph-column {
+    flex: 1;
+    min-width: 0;
+}
+
+.attribution-hint {
+    background: color-mix(in srgb, var(--primary-color) 10%, var(--card-bg) 90%);
+    color: var(--text-color);
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-top: 12px;
+    font-size: 0.9em;
+    border-left: 3px solid var(--primary-color);
+}
+
+.attribution-hint.is-armed {
+    background: color-mix(in srgb, var(--success-color) 12%, var(--card-bg) 88%);
+    border-left-color: var(--success-color);
+}
+
+.graph-container {
+    display: block;
+    position: relative;
+    height: 80vh;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+}
+
+/* Source Discovery Modal */
+.discovery-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 16px;
+}
+
+.discovery-tab {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    font-size: 0.95em;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.discovery-tab:hover {
+    color: var(--text-color);
+}
+
+.discovery-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.discovery-panel {
+    display: none;
+}
+
+.discovery-panel.active {
+    display: block;
+}
+
+.discovery-results {
+    max-height: 360px;
+    overflow-y: auto;
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 6px;
+    scrollbar-width: thin;
+}
+
+.discovery-result-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+.discovery-result-item:hover {
+    background: var(--hover-bg);
+}
+
+.discovery-result-item .result-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.discovery-result-item .result-title {
+    font-size: 0.95em;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.discovery-result-item .result-meta {
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.discovery-result-item .result-add {
+    flex-shrink: 0;
+}
+
+.discovery-result-item .result-add[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Attribute Source Dialog */
+.attribute-source-info {
+    background: var(--hover-bg);
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-soft);
+}
+
+.attribute-source-info .attr-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.attribute-source-info .attr-author {
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+/* Settings Toggle Button */
+.settings-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    padding: 6px 16px 6px 10px;
+    color: var(--text-color);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    height: 40px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    position: relative;
+    user-select: none;
+}
+
+.settings-toggle-btn:hover:not(:disabled) {
+    background: var(--hover-bg);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.settings-toggle-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.settings-toggle-btn-track {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+    background: var(--border-color);
+    border-radius: 999px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.settings-toggle-btn.is-dark .settings-toggle-btn-track {
+    background: var(--primary-color);
+}
+
+.settings-toggle-btn-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    box-shadow: 0 1px 2px var(--shadow-color);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.settings-toggle-btn.is-dark .settings-toggle-btn-thumb {
+    transform: translateX(14px);
+    background: var(--card-bg);
+}
+
+.settings-toggle-btn-label {
+    min-width: 80px;
+    text-align: left;
+}
+
+/* Read-only field display in modals */
+.readonly-field {
+    background: var(--bg-color);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text-color);
+    font-size: 0.95em;
+    word-break: break-word;
+}
+
+.readonly-field a {
+    color: var(--primary-color);
+    word-break: break-all;
+}
+
+/* Danger button variant */
+.btn-danger {
+    background: var(--error-color);
+    color: #fff;
+    border-color: var(--error-color);
+}
+
+.btn-danger:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.btn-danger:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
