@@ -1,7 +1,12 @@
-/**
- * KNW v2.0, RVR v1.0, and CPB v1.0 Offline Codec
- * Encodes and decodes .knw v2.0, .rvr v1.0, and .cpb v1.0 binary files using local vendored zstd-wasm.
- * Conforms to RFC 8785 (JSON Canonicalization Scheme) and SHA-256 CID computation.
+/*
+ * Copyright (C) 2026 The Brotherhood Project Developers
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 const KNW_MAGIC = "KNW";
