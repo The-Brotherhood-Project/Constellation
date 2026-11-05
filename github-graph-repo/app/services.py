@@ -79,7 +79,7 @@ def add_graph(db: Session, graph_metadata: schemas.GraphCreate, graph_data: byte
     # Publish Nostr Events (Kind 0 Manifest & Kind 1 Resource Availability)
     try:
         nostr_service.publish_resource_availability(graph_cid, available=True)
-        nostr_service.publish_project_update(graph_uuid, "crt")        # Created
+        nostr_service.publish_project_update(graph_uuid, status="crt")        # Created
     except Exception as e:
         print(f"Failed to publish nostr events for new graph {graph_uuid}: {e}")
 
@@ -151,7 +151,7 @@ def add_snapshot(db: Session, snapshot_metadata: schemas.SnapshotCreate, snapsho
     # Publish Nostr Events (Kind 1 Resource Availability & Kind 2 Project Update)
     try:
         nostr_service.publish_resource_availability(graph_cid, available=True)
-        nostr_service.publish_project_update(graph.uuid, sub_type="versadd")        # Version added
+        nostr_service.publish_project_update(graph.uuid, status="versadd")        # Version added
     except Exception as e:
         print(f"Failed to publish nostr events for snapshot {graph_cid}: {e}")
 

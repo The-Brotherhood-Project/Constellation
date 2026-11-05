@@ -39,7 +39,9 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="The Brotherhood GitHub Graph Repo Service", lifespan=lifespan)
+app = FastAPI(title="The Brotherhood GitHub Graph Repo Service",
+    openapi_url="/api/v1/openapi.json",
+    version="1", lifespan=lifespan)
 
 # Add CORS middleware for development
 print("Adding CORS middleware...")

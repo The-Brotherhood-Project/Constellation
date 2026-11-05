@@ -44,9 +44,6 @@ def get_keypair() -> Tuple[ed25519.Ed25519PrivateKey, str]:
     priv_key_str = os.getenv("SERVICE_PRIVATE_KEY")
     did_str = os.getenv("SERVICE_DID")
 
-    print(f"SERVICE_PRIVATE_KEY: {priv_key_str}")
-    print(f"SERVICE_DID: {did_str}")
-
     if priv_key_str and did_str:
         try:
             priv_key_str_clean = priv_key_str.strip().strip('"').strip("'").replace("\\n", "\n")
@@ -90,7 +87,7 @@ def broadcast_event(event_payload: Dict) -> Dict[str, bool]:
     payload_bytes = json.dumps(event_payload).encode('utf-8')
 
     for relay_base_url in relay_urls:
-        endpoint = f"{relay_base_url.rstrip('/')}/api/v1/events"
+        endpoint = f"{relay_base_url.rstrip('/')}/events"
         req = urllib.request.Request(
             endpoint,
             data=payload_bytes,
@@ -158,12 +155,13 @@ def publish_resource_availability(cid: str, available: bool = True) -> Tuple[Dic
     
     return event_payload_json, event_payload_knw
 
-def publish_project_update(graph_uuid: str, sub_type: str) -> Dict:
-    """Publish Kind 2 (27002) Project Update event (non-replaceable)"""
+def publish_project_update(graph_uuid: str, status: str) -> Dict:
+    """Publish Kind 2 (27002) Project Update graph-curation event (non-replaceable)"""
     tags = {
         "did": f"did:uuid:{graph_uuid}",
         "endpoint": f"get-details/{graph_uuid}",
-        "sub_type": sub_type
+        "sub_type": 'gc',
+        "status": status
     }
     event_payload = create_and_sign_event(kind=PROTOCOL_NUMBER + 2, tags=tags)
     broadcast_event(event_payload)

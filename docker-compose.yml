@@ -1,0 +1,83 @@
+name: brotherhood-orchestrator
+
+services:
+  shared-db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    
+    volumes:
+      # Mount the init.sql file to the container
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+
+  shared-ucan:
+    image: darksecret/brotherhood-ucan:latest
+    init: true
+    ports:
+      - "7600:7600"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:7600/health || exit 1"]
+      interval: 5s
+      timeout: 1m30s
+      retries: 5
+      start_period: 3s
+    environment:
+      PORT: 7600
+
+  nostr-relay:
+    build: ./nostr-relay
+    ports:
+      - "27000:27000"
+    environment:
+      PYTHON-UNBUFFERED: 1
+      # Override env url variables
+      PORT: 27000
+      DATABASE_URL: postgresql://postgres:postgres@shared-db:5432/nostr_relay
+      UCAN_SERVICE_URL: http://shared-ucan:7600
+      SERVICE_URL: http://host.docker.internal:27000/api/v1
+    env_file:
+      - path: ./nostr-relay/.env
+        required: false
+    depends_on:
+      shared-db:
+        condition: service_started
+      shared-ucan:
+        condition: service_healthy
+      
+    volumes:
+      - credentials-nostr-relay:/nostr-relay/credentials
+
+  github-graph-repo:
+    build: ./github-graph-repo
+    ports:
+      - "10000:10000"
+    environment:
+      PYTHON-UNBUFFERED: 1
+      # Override env url variables
+      PORT: 10000
+      DATABASE_URL: postgresql://postgres:postgres@shared-db:5432/github_graph_repo
+      UCAN_SERVICE_URL: http://shared-ucan:7600
+      SERVICE_URL: http://host.docker.internal:10000/api/v1
+      NOSTR_RELAY_URLS: "[\"http://host.docker.internal:27000/api/v1\"]"
+    env_file:
+      - path: ./github-graph-repo/.env
+        required: false
+    depends_on:
+      shared-db:
+        condition: service_started
+      shared-ucan:
+        condition: service_healthy
+      nostr-relay:
+        condition: service_started
+      
+    volumes:
+      - credentials-github-graph-repo:/github-graph-repo/credentials
+      
+volumes:
+  postgres_data:
+  credentials-github-graph-repo:
+  credentials-nostr-relay:

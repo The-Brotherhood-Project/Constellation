@@ -28,7 +28,7 @@ services:
       - credentials:/nostr-relay/credentials
 
   ucan-service:
-    build: ../brotherhood-ucan
+    image: darksecret/brotherhood-ucan:latest
     init: true
     ports:
       - "27076:7600"

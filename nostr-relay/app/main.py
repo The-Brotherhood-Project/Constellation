@@ -36,17 +36,12 @@ async def lifespan(app: FastAPI):
 
     yield
 
-app = FastAPI(title="The Brotherhood Nostr Relay Service", lifespan=lifespan)
+app = FastAPI(title="The Brotherhood Nostr Relay Service",
+    openapi_url="/api/v1/openapi.json",
+    version="1", lifespan=lifespan)
 
 # Add CORS middleware
-allowed_origins = [
-    "http://localhost:3000",
-    "http://localhost:8000",
-    "http://localhost:10000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1:10000",
-]
+allowed_origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,

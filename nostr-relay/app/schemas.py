@@ -40,7 +40,8 @@ class ProjectTag(BaseModel):
     kind: Literal[2] = Field(2, description="The type of the tag, must be 2 for project")
     did: str = Field(..., description="Public DID of the project")
     endpoint: str = Field(..., description="The endpoint where information about this project can be found")
-    sub_type: Optional[str] = Field(None, description="The sub-type of the project")
+    sub_type: Optional[str] = Field(None, description="The sub-type of the project, use 'gc' for graph curation, 'rc' for roverlay curation etc.")
+    status: Optional[str] = Field(None, description="The status of the project, scoped to sub-type")
 
 # This is a "nostr-like" event schema that uses slightly different key names, no content, dict tags, and ed25519 signatures
 class NostrEvent(BaseModel):
