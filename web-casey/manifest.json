@@ -1,0 +1,8 @@
+{
+    "name": "Web Casey",
+    "description": "Assessment, capability tracking, and self-evaluation tool built with unidirectional state flow.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Active",
+    "stage": "Implemented",
+    "tags": ["Web", "Assessment", "Skills", "Offline-First"]
+}

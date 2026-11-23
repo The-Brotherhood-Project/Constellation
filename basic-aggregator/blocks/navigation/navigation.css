@@ -1,0 +1,110 @@
+/*
+Copyright (C) 2026 The Brotherhood Project Developers
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+.site-header {
+    background-color: var(--nav-bg, #ffffff);
+    border-bottom: 1px solid var(--border-color, #dadce0);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.site-brand {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: inherit;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    display: block;
+    object-fit: contain;
+    background-color: var(--disabled-bg);
+    padding: 4px;
+    box-shadow: -5px 5px 2px var(--shadow-modal);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color, #1a73e8);
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted, #5f6368);
+}
+
+.site-nav .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.site-nav .nav-link {
+    display: inline-block;
+    padding: 0.5rem 0.85rem;
+    text-decoration: none;
+    color: var(--text-color, #202124);
+    font-weight: 500;
+    border-radius: 4px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    font-size: 0.9rem;
+}
+
+.site-nav .nav-link:hover {
+    background-color: var(--hover-bg, #f1f3f4);
+}
+
+.site-nav .nav-link.active {
+    background-color: var(--active-bg, #e8eaed);
+    color: var(--primary-color, #1a73e8);
+    font-weight: 600;
+}
+
+.site-nav .nav-link.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+    }
+}

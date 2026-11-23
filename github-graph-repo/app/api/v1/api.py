@@ -80,6 +80,7 @@ async def add_version(
 def get_service_metadata():
     service_name = os.getenv("SERVICE_NAME") or ""
     service_desc = os.getenv("SERVICE_DESC") or ""
+    service_operator = os.getenv("SERVICE_OPERATOR") or ""
     service_did = os.getenv("SERVICE_DID") or ""
     copyright_notice = os.getenv("COPYRIGHT_NOTICE") or ""
     if os.path.exists("LICENSE.txt"):
@@ -90,12 +91,14 @@ def get_service_metadata():
     latest_api_version = os.getenv("LATEST_API_VERSION") or ""
     public_repo_url = os.getenv("PUBLIC_REPO_URL") or ""
 
-    return {
-        "service_name": service_name,
-        "service_desc": service_desc,
-        "service_did": service_did,
-        "copyright_notice": copyright_notice,
-        "license": license,
-        "latest_api_version": latest_api_version,
-        "public_repo_url": public_repo_url
-    }
+    return schemas.ServiceMetadata(
+        service_name=service_name,
+        service_desc=service_desc,
+        service_operator=service_operator,
+        service_type="Repository",
+        service_did=service_did,
+        copyright_notice=copyright_notice,
+        license=license,
+        latest_api_version=latest_api_version,
+        public_repo_url=public_repo_url
+    )

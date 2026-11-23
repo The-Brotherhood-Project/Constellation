@@ -80,6 +80,10 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Add the router
 app.include_router(router, prefix="/api")
 
+# Direct /metadata endpoint without api prefix
+from .api.v1.api import get_service_metadata
+app.add_api_route("/metadata", get_service_metadata, methods=["GET"], summary="Service Manifest Metadata")
+
 # Health check endpoint
 @app.get("/health")
 async def health_check():

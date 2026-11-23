@@ -24,3 +24,14 @@ class SnapshotCreate(BaseModel):
     base_cid: str = Field(..., description="The base snapshot of this graph on which this current one is built. This is requied. If you want to make a version without an explicit base_cid, create a new graph or make a fork")
 
     token: str = Field(..., description="The authorisation token for the creation of this snapshot")
+
+class ServiceMetadata(BaseModel):
+    service_name: str = Field(..., description="The name of the service")
+    service_desc: str = Field(..., description="The description of the service")
+    service_type: str = Field(..., description="The type of the Brotherhood service")
+    service_operator: str = Field(..., description="The operator of the Brotherhood service")
+    service_did: str = Field(..., description="The DID of the service")
+    copyright_notice: str = Field(..., description="The copyright notice of the service")
+    license: str = Field(..., description="The full license of the service")
+    latest_api_version: str = Field(..., description="The latest API version of the service, used for contacting the service")
+    public_repo_url: Optional[str] = Field(None, description="The public repository URL of the service, required for agpl compliance")

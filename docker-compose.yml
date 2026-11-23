@@ -76,6 +76,19 @@ services:
       
     volumes:
       - credentials-github-graph-repo:/github-graph-repo/credentials
+
+  basic-aggregator:
+    build: ./basic-aggregator
+    init: true
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - nostr-relay
+      - github-graph-repo
+
+    volumes:
+      - ./docs:/docs:ro
       
 volumes:
   postgres_data:

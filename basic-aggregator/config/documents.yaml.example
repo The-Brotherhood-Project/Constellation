@@ -1,0 +1,38 @@
+# Document Library Configuration Example
+#
+# Configures the local document directory to scan and editorial overrides.
+# The builder scans this directory for Markdown (.md) files.
+# If a document is listed here, its configuration overrides any frontmatter
+# extracted from the markdown file itself.
+
+# Path relative to the aggregator root pointing to markdown files
+documents_directory: "../docs"
+
+# Optional list of document overrides and highlights
+documents:
+  # 'id': Unique identifier used for internal links and URL hashes (#view=architecture)
+  - id: architecture
+    # 'file': Target file name in documents_directory
+    file: "ARCHITECTURE.md"
+    # 'title': Editorial title displayed on cards and viewer header
+    title: "Constellation Architecture"
+    # 'description': Summary displayed in the card preview
+    description: "System architecture, core components, protocols, and data structures."
+    # 'tags': Stringified JSON array of tags or YAML list. Used for badge chips and filtering
+    tags: '["Architecture", "Technical", "Core"]'
+    # 'featured': Boolean. If true, adds highlight borders and styles to the card
+    featured: true
+
+  - id: web-design
+    file: "WEB-DESIGN.md"
+    title: "Web Design System & Specification"
+    description: "Offline-first patterns, unidirectional architecture, tokens, and UI standards."
+    tags: '["Design", "Frontend", "Guidelines"]'
+    featured: true
+
+  - id: roadmap
+    file: "ROADMAP.md"
+    title: "Project Roadmap"
+    description: "Milestones, capability targets, and evolution pathways."
+    tags: '["Planning", "Milestones", "Developers"]'
+    featured: false

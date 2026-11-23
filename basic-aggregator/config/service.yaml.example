@@ -1,0 +1,35 @@
+# Service Metadata and Daemon Configuration Example
+#
+# Configures aggregator metadata, exported service-metadata manifest, and periodic background build intervals.
+# Follows the standard service_manifest schema used across Brotherhood services.
+
+# 'service_name': Public identification name for the portal/aggregator
+service_name: "The Brotherhood Portal"
+
+# 'service_desc': High-level description of this aggregator site
+service_desc: "Public Aggregator & Entry Portal for the Constellation Ecosystem"
+
+# 'service_type': Type designation ('Aggregator', 'Portal', 'Static Portal')
+service_type: "Aggregator"
+
+# 'service_operator': Maintainer or operating organization
+service_operator: "The Brotherhood Project Developers"
+
+# 'service_did': Optional DID of the aggregator node if keypair is configured
+service_did: ""
+
+# 'status': Operational state ('Active', 'Maintenance', etc.)
+status: "Active"
+
+# 'latest_api_version': Optional API version (leave empty for pure static sites without an API)
+latest_api_version: ""
+
+# 'public_repo_url': Link to the aggregator source code repository (required for AGPL compliance)
+public_repo_url: "https://github.com/The-Brotherhood-Project/Constellation"
+
+# 'tags': Service categorization tags
+tags: ["Portal", "Static", "Aggregator"]
+
+# 'rebuild_interval_seconds': Time interval (in seconds) between periodic rebuild runs when running in background/daemon mode.
+# Default: 3600 (1 hour). Re-probes remote manifests and rebuilds dist/ automatically.
+rebuild_interval_seconds: 3600

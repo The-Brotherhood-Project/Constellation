@@ -1,0 +1,31 @@
+<!--
+-- Copyright (C) 2026 The Brotherhood Project Developers
+--
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as
+-- published by the Free Software Foundation, either version 3 of the
+-- License, or (at your option) any later version.
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<!-- Infrastructure Card Block -->
+<article class="infra-card {featured_class}" data-infra-id="{id}">
+    <div class="infra-card-header">
+        <div class="infra-card-badges">
+            <span class="badge badge-status {status_class}">{status}</span>
+            <span class="badge badge-stage">{stage}</span>
+            {badges_html}
+        </div>
+    </div>
+    <h3 class="infra-card-title">
+        <a href="{repo_url}" target="_blank" rel="noopener noreferrer">{name}</a>
+    </h3>
+    <p class="infra-card-description">{description}</p>
+    <div class="infra-card-actions">
+        <a href="{repo_url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-small">
+            <span class="btn-icon">📁</span>
+            <span class="btn-text">📁 Repo</span>
+        </a>
+    </div>
+</article>

@@ -1,0 +1,9 @@
+services:
+  basic-aggregator:
+    build: .
+    init: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../docs:/docs:ro
+    restart: unless-stopped

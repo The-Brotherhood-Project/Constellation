@@ -1,0 +1,8 @@
+{
+    "name": "GitHub Graph Repository",
+    "description": "A repository for storing and sharing public knowledge graphs with storage on GitHub and authentication through UCAN tokens.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Active",
+    "stage": "Implemented",
+    "tags": ["Knowledge", "Graph", "Repository"]
+}

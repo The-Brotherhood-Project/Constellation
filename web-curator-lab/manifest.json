@@ -1,0 +1,8 @@
+{
+    "name": "Web Curator Lab",
+    "description": "Zero-build, offline-first knowledge graph curation, editing, and visualization interface.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Active",
+    "stage": "Implemented",
+    "tags": ["Web", "Frontend", "Visualization", "Offline-First"]
+}

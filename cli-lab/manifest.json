@@ -1,0 +1,8 @@
+{
+    "name": "CLI Lab",
+    "description": "Command-line utilities and batch tools for inspecting, converting, and validating binary graph packages.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Planned",
+    "stage": "Preliminary",
+    "tags": ["CLI", "Tools", "Terminal"]
+}

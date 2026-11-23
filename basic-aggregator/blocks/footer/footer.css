@@ -1,0 +1,54 @@
+/*
+Copyright (C) 2026 The Brotherhood Project Developers
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+*/
+.site-footer {
+    background-color: var(--card-bg, #ffffff);
+    border-top: 1px solid var(--border-color, #dadce0);
+    padding: 2rem 1.5rem;
+    margin-top: 3rem;
+    color: var(--text-muted, #5f6368);
+    font-size: 0.85rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-text {
+    margin: 0 0 0.25rem 0;
+    font-weight: 500;
+}
+
+.footer-subtext {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.footer-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.footer-license {
+    line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+    .footer-bottom-row {
+        flex-direction: column;
+    }
+}

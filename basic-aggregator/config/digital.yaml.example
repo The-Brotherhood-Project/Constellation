@@ -1,0 +1,51 @@
+# Digital Infrastructure Directory Configuration Example
+#
+# Configures the software components, repositories, and specifications to aggregate.
+# NOTE: If a valid 'manifest_url' is provided and reachable, published values from
+# that manifest (e.g. name, description, repo_url, status, stage, tags) will dynamically
+# override editorial values defined below.
+# If manifest_url is empty or unreachable, editorial values are used as reliable fallback.
+
+repositories:
+  # 'id': Unique component identifier
+  - id: constellation-core
+    # 'name': Component display name
+    name: "Constellation Core"
+    # 'description': Detailed description of the software repository
+    description: "Foundational protocols, graph formats (KNW, RVR, CPB), and offline codecs."
+    # 'repo_url': Link to the public source code repository & specifications
+    repo_url: "https://github.com/The-Brotherhood-Project/Constellation"
+    # 'status': Operational/development status ('Active', 'Prototype', 'Planned', etc.)
+    status: "Active"
+    # 'stage': Maturity stage ('Implemented', 'In Progress', 'Specification', etc.)
+    stage: "Implemented"
+    # 'tags': Generic tags array for category classification and badges
+    tags: '["Core", "Protocols", "Specs"]'
+    # 'featured': Boolean. If true, highlights the card in the digital directory
+    featured: true
+    # 'manifest_url': URL to fetch remote manifest (JSON/YAML). When present, overrides editorial values
+    manifest_url: ""
+
+  - id: web-curator-lab
+    featured: true
+    manifest_url: "http://host.docker.internal:5500/web-curator-lab/manifest.json"
+
+  - id: web-casey
+    featured: false
+    manifest_url: "http://localhost:5500/web-casey/manifest.json"
+
+  - id: brotherhood-ucan
+    featured: false
+    manifest_url: "http://localhost:5500/brotherhood-ucan/manifest.json"
+
+  - id: github-graph-repo
+    featured: false
+    manifest_url: "http://localhost:5500/github-graph-repo/manifest.json"
+
+  - id: nostr-relay
+    featured: false
+    manifest_url: "http://localhost:5500/nostr-relay/manifest.json"
+
+  - id: cli-lab
+    featured: false
+    manifest_url: "http://localhost:5500/cli-lab/manifest.json"

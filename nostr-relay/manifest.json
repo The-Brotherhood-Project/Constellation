@@ -1,0 +1,8 @@
+{
+    "name": "Nostr Relay Service",
+    "description": "Lightweight decentralized sync and event distribution Nostr-like relay for arbitrary Brotherhood events.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Active",
+    "stage": "Implemented",
+    "tags": ["Sync", "Relay", "Nostr", "Networking", "Events"]
+}

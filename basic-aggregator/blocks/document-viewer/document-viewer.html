@@ -1,0 +1,38 @@
+<!--
+-- Copyright (C) 2026 The Brotherhood Project Developers
+--
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as
+-- published by the Free Software Foundation, either version 3 of the
+-- License, or (at your option) any later version.
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<!-- Document Viewer Modal Overlay -->
+<div id="document-viewer-modal" class="modal doc-viewer-modal" aria-hidden="true">
+    <div class="modal-overlay" data-action="close"></div>
+    <div class="modal-container doc-viewer-container" role="dialog" aria-labelledby="doc-viewer-title">
+        <header class="doc-viewer-header">
+            <div class="doc-viewer-info">
+                <span id="doc-viewer-badge" class="badge"></span>
+                <h2 id="doc-viewer-title" class="doc-viewer-heading"></h2>
+            </div>
+            <div class="doc-viewer-controls">
+                <a id="doc-viewer-download" href="#" download class="btn btn-secondary btn-small" title="Download raw markdown file">
+                    <span class="btn-icon">💾</span>
+                    <span class="btn-text">💾 Download Original</span>
+                </a>
+                <button type="button" class="btn btn-secondary btn-small doc-viewer-close" data-action="close" title="Close Viewer (Esc)">
+                    <span class="btn-icon">✖</span>
+                    <span class="btn-text">✖ Close</span>
+                </button>
+            </div>
+        </header>
+        <div class="doc-viewer-body">
+            <article id="doc-viewer-rendered" class="doc-viewer-content markdown-body">
+                <!-- Rendered Markdown will be injected here via client-side Marked -->
+            </article>
+        </div>
+    </div>
+</div>

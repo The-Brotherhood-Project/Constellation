@@ -64,3 +64,14 @@ class EventKindSchema(BaseModel):
     kind: int
     name: Optional[str] = None
     description: Optional[str] = None
+
+class ServiceMetadata(BaseModel):
+    service_name: str = Field(..., description="The name of the service")
+    service_desc: str = Field(..., description="The description of the service")
+    service_type: str = Field(..., description="The type of the Brotherhood service")
+    service_operator: str = Field(..., description="The operator of the service")
+    service_did: str = Field(..., description="The DID of the service")
+    copyright_notice: str = Field(..., description="The copyright notice of the service")
+    license: str = Field(..., description="The full license of the service")
+    latest_api_version: str = Field(..., description="The latest API version of the service, used for contacting the service")
+    public_repo_url: Optional[str] = Field(None, description="The public repository URL of the service, required for agpl compliance")

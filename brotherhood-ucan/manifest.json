@@ -1,0 +1,8 @@
+{
+    "name": "Brotherhood UCAN",
+    "description": "User-Controlled Authorization Networks for decentralized, cryptographically verifiable capability delegation.",
+    "repo_url": "https://github.com/The-Brotherhood-Project/Constellation",
+    "status": "Active",
+    "stage": "Implemented",
+    "tags": ["Auth", "UCAN", "Decentralized", "Crypto"]
+}
